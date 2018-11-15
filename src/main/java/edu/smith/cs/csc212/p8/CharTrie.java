@@ -1,11 +1,9 @@
 package edu.smith.cs.csc212.p8;
 
-import java.util.AbstractSet;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
- * This is a Character Trie that stores Strings!
+ * sThis is a Character Trie that stores Strings!
  * @author jfoley
  *
  */
@@ -37,6 +35,7 @@ public class CharTrie extends AbstractSet<String> {
 		return root.find(chars);
 	}
 	
+	
 	/**
 	 * Every node in a Trie may have many links (to future letters) AND it may be the "terminal" state of a word.
 	 */
@@ -59,7 +58,7 @@ public class CharTrie extends AbstractSet<String> {
 		}
 		
 		/**
-		 * This maps a character to it's index in our array of links.
+		 * This maps a character to its index in our array of links.
 		 * @param c (a letter, a-z or a hyphen.)
 		 * @return 0-25 for a-z and - for 26
 		 */
@@ -69,7 +68,7 @@ public class CharTrie extends AbstractSet<String> {
 				return this.links.length - 1;
 			}
 			if (lower > 'z' || lower < 'a') {
-				throw new RuntimeException("Bad character: "+lower);
+				return -1;
 			}
 			return lower - 'a';	
 		}
@@ -82,7 +81,11 @@ public class CharTrie extends AbstractSet<String> {
 			if (chars.isEmpty()) {
 				this.terminal = true;
 			} else {
-				int link = getLinkIndex(chars.pollFirst());
+				char c = chars.pollFirst();
+				int link = getLinkIndex(c);
+				if (link == -1) {
+					throw new RuntimeException("Bad Character: "+ c);
+				}
 				if (links[link] == null) {
 					links[link] = new Node();
 				}
@@ -100,6 +103,9 @@ public class CharTrie extends AbstractSet<String> {
 				return this.terminal;
 			} else {
 				int link = getLinkIndex(chars.pollFirst());
+				if (link == -1) {
+					return false;
+				}
 				if (links[link] == null) {
 					return false;
 				}
@@ -109,16 +115,23 @@ public class CharTrie extends AbstractSet<String> {
 		
 		/**
 		 * Incomplete method to compute how many nodes are in this Trie. Recursive.
-		 * @return the count of nodes that exist in the Trie, starting from here.
+		 * @return the count of nodes that exist in the Trie, starting from here. (here included)
 		 */
 		public int countNodes() {
-			int count = 1;
 			// loop over links
 			// if they're not null
 			// count them, too
-			return count;
+			
+			int nodeCount = 0;
+			for(int i=0;i<links.length;i++) {
+				if(links[i]!=null) {
+					nodeCount++;
+					nodeCount+=links[i].countNodes();
+				}
+			}
+			return nodeCount;
 		}
-	}
+	} 
 	
 	/**
 	 * How do you count the nodes in this Trie?

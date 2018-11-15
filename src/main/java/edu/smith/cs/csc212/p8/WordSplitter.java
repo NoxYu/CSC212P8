@@ -18,7 +18,7 @@ public class WordSplitter {
 	private static Pattern spacesOrPunctuation = 
 			Pattern.compile("(\\s+|\\p{Punct})");
 	
-	/**
+	/** 
 	 * I'm giving you a version of this that is slightly better than
 	 * the String.split(" ") that I used in lecture.
 	 * 

@@ -17,7 +17,7 @@ public class SortedStringListSet extends AbstractSet<String> {
 	 * This is the sorted list of data.
 	 */
 	private List<String> data;
-	
+	 
 	/**
 	 * This is the constructor: we take in data, copy and sort it (just to be sure).
 	 * @param data the input list.
@@ -51,8 +51,24 @@ public class SortedStringListSet extends AbstractSet<String> {
 	 * @return the index found, OR negative if not found.
 	 */
 	private int binarySearch(String query, int start, int end) {
+				
 		// TODO: replace this with your own binary search.
-		return Collections.binarySearch(this.data.subList(start, end), query);
+		
+		if(start>=end) {
+			return -1;
+		}
+		
+		int mid=(start+end)/2;
+		String midVal =data.get(mid); 
+		
+		if(midVal.compareTo(query)<0) {
+			return binarySearch(query, mid+1, end);
+		}else if(midVal.compareTo(query)>0) {
+			return binarySearch(query,start,mid-1);
+		}else {
+			return mid;
+		}
+		//return Collections.binarySearch(this.data.subList(start, end), query);
 	}
 
 	/**
