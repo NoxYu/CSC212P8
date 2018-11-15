@@ -143,6 +143,13 @@ public class CheckSpelling {
 			trie.insert(w);
 		}
 		LLHash hm100k = new LLHash(100000);
+		/*
+		 * lookup of items found in LLHash with different numBuckets:
+		 * default numBuckets = 100000; lookup time ~=140ns/item
+		 * numBuckets = defaultValue/100; lookup time drastically increased - lookup time ~=4000ns/item
+		 * numBuckets = defaultValue*100; lookup time doesn't change much - lookup time ~=170ns/item
+		 * numBuckets = decaultValue*10000; lookup time - OutOfMemory 
+		 */
 		for (String w : listOfWords) {
 			hm100k.add(w);
 		}

@@ -14,4 +14,15 @@ public class Tests {
 		ct.insert("vm");
 		Assert.assertEquals(7,ct.countNodes());	
 	}
+	
+	@Test
+	public void testCharTrieNodeCount2() {
+		CharTrie ct = new CharTrie();
+		ct.insert("apple");
+		Assert.assertEquals(5, ct.countNodes());
+		ct.insert("apps");
+		Assert.assertEquals(6, ct.countNodes());
+		ct.insert("please");
+		Assert.assertEquals(12, ct.countNodes());		
+	}
 }
